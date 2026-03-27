@@ -1,7 +1,9 @@
 //! Criterion benchmarks for raw, `bvxn`, and `decmpfs` paths.
 #![allow(missing_docs)]
 
-use criterion::{BenchmarkId, Criterion, black_box, criterion_group, criterion_main};
+use std::hint::black_box;
+
+use criterion::{BenchmarkId, Criterion, criterion_group, criterion_main};
 use lzvn::{decode_bvxn, decode_decmpfs, decode_raw, encode_bvxn, encode_decmpfs, encode_raw};
 
 fn repetitive_bytes(len: usize) -> Vec<u8> {

@@ -14,12 +14,12 @@ categories = ["compression"]
 exclude = ["/fuzz"]
 
 [dependencies]
-thiserror = "2.0.17"
+thiserror = "2.0"
 
 [dev-dependencies]
-criterion = "0.5.1"
-lzfse = "0.2.0"
-proptest = "1.9.0"
+criterion = "0.8"
+lzfse = "0.2"
+proptest = "1.11"
 
 [lints.rust]
 unsafe_code = "forbid"
