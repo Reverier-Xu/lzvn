@@ -19,9 +19,7 @@ jobs:
 
     steps:
       - name: checkout
-        uses: actions/checkout@v4
-        with:
-          eol: lf
+        uses: actions/checkout@v6
 
       - name: install stable rust toolchain
         uses: dtolnay/rust-toolchain@stable
@@ -63,7 +61,7 @@ jobs:
 
       - name: upload crate artifacts
         if: ${{ env.ACT != 'true' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: release-artifacts
           path: |
@@ -72,9 +70,12 @@ jobs:
 
       - name: create github release
         if: ${{ env.ACT != 'true' }}
-        uses: softprops/action-gh-release@v2
-        with:
-          generate_release_notes: true
-          files: |
-            ${{ steps.crate.outputs.crate_file }}
-            ${{ steps.crate.outputs.checksum_file }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          gh release create "${GITHUB_REF_NAME}" \
+            "${{ steps.crate.outputs.crate_file }}" \
+            "${{ steps.crate.outputs.checksum_file }}" \
+            --generate-notes \
+            --verify-tag
