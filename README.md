@@ -22,13 +22,23 @@ Planned next steps:
 Validation:
 
 - `cargo test`
+- `cargo test --test differential`
 - `cargo clippy --all-targets --all-features -- -D warnings`
 - `cargo bench`
+
+Fuzzing:
+
+- install `cargo-fuzz` with `cargo install cargo-fuzz`
+- run `cargo fuzz run raw_decode`
+- run `cargo fuzz run bvxn_decode`
+- run `cargo fuzz run decmpfs_decode`
+- run `cargo fuzz run roundtrip`
 
 Fixtures:
 
 - real-world regression fixtures live in `tests/fixtures/`
 - source urls and license notes are documented in `tests/fixtures/README.md`
+- fuzz seed corpora live in `fuzz/corpus/`
 
 Example:
 

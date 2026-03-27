@@ -1,0 +1,45 @@
+[package]
+name = "lzvn-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2024"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4.10"
+
+[dependencies.lzvn]
+path = ".."
+
+[[bin]]
+name = "raw_decode"
+path = "fuzz_targets/raw_decode.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "bvxn_decode"
+path = "fuzz_targets/bvxn_decode.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "decmpfs_decode"
+path = "fuzz_targets/decmpfs_decode.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "roundtrip"
+path = "fuzz_targets/roundtrip.rs"
+test = false
+doc = false
+bench = false
+
+[workspace]
+members = ["."]
