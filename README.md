@@ -1,9 +1,9 @@
-# lzvn
+# LZVN: Compress algorithms for Apple LZFSE
 
 [![crates.io](https://img.shields.io/crates/v/lzvn.svg)](https://crates.io/crates/lzvn)
 [![docs.rs](https://docs.rs/lzvn/badge.svg)](https://docs.rs/lzvn)
 
-`lzvn` is a safe, clean-room Rust implementation of Apple's LZVN format.
+`lzvn` is a pure Rust implementation of Apple's LZVN format.
 
 Current scope:
 
@@ -28,11 +28,6 @@ Validation:
 - `cargo test --test differential`
 - `cargo clippy --all-targets --all-features -- -D warnings`
 - `cargo bench`
-
-Release:
-
-- push a tag matching the crate version, for example `0.1.1`, to trigger the release workflow
-- the workflow verifies the tag matches `Cargo.toml`, runs clippy and tests, packages the crate, and creates a GitHub release with the `.crate` file and sha256 checksum
 
 Fuzzing:
 
