@@ -2,11 +2,16 @@
 name = "lzvn"
 version = "0.1.0"
 edition = "2024"
+authors = ["Reverier-Xu <reverier.xu@woooo.tech>"]
 license = "Apache-2.0"
 description = "Safe, clean-room LZVN encode/decode support for raw streams and Apple wrappers"
 readme = "README.md"
+repository = "https://github.com/Reverier-Xu/lzvn"
+homepage = "https://github.com/Reverier-Xu/lzvn"
+documentation = "https://docs.rs/lzvn"
 keywords = ["compression", "lzvn", "apple"]
 categories = ["compression"]
+exclude = ["/fuzz"]
 
 [dependencies]
 thiserror = "2.0.17"
