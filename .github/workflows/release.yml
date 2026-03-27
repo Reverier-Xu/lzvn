@@ -20,6 +20,8 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v4
+        with:
+          eol: lf
 
       - name: install stable rust toolchain
         uses: dtolnay/rust-toolchain@stable
