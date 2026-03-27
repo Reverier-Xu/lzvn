@@ -1,0 +1,16 @@
+[package]
+name = "lzvn"
+version = "0.1.0"
+edition = "2024"
+license = "Apache-2.0"
+description = "Safe, clean-room LZVN encode/decode support for raw streams and Apple wrappers"
+readme = "README.md"
+keywords = ["compression", "lzvn", "apple"]
+categories = ["compression"]
+
+[dependencies]
+thiserror = "2.0.17"
+
+[lints.rust]
+unsafe_code = "forbid"
+missing_docs = "warn"

@@ -1,0 +1,34 @@
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub(crate) enum OpcodeKind {
+  SmallDistance,
+  MediumDistance,
+  LargeDistance,
+  PreviousDistance,
+  SmallLiteral,
+  LargeLiteral,
+  SmallMatch,
+  LargeMatch,
+  Nop,
+  Eos,
+}
+
+pub(crate) fn classify(opcode: u8) -> Option<OpcodeKind> {
+  let kind = match opcode {
+    0x06 => OpcodeKind::Eos,
+    0x0e | 0x16 => OpcodeKind::Nop,
+    0xa0..=0xbf => OpcodeKind::MediumDistance,
+    0xe0 => OpcodeKind::LargeLiteral,
+    0xe1..=0xef => OpcodeKind::SmallLiteral,
+    0xf0 => OpcodeKind::LargeMatch,
+    0xf1..=0xff => OpcodeKind::SmallMatch,
+    0x46 | 0x4e | 0x56 | 0x5e | 0x66 | 0x6e | 0x86 | 0x8e | 0x96 | 0x9e | 0xc6 | 0xce => {
+      OpcodeKind::PreviousDistance
+    }
+    0x07 | 0x0f | 0x17 | 0x1f | 0x27 | 0x2f | 0x37 | 0x3f | 0x47 | 0x4f | 0x57 | 0x5f | 0x67
+    | 0x6f | 0x87 | 0x8f | 0x97 | 0x9f | 0xc7 | 0xcf => OpcodeKind::LargeDistance,
+    0x1e | 0x26 | 0x2e | 0x36 | 0x3e | 0x70..=0x7f | 0xd0..=0xdf => return None,
+    _ => OpcodeKind::SmallDistance,
+  };
+
+  Some(kind)
+}
