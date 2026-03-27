@@ -1,0 +1,77 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "*.*.*"
+
+env:
+  CARGO_TERM_COLOR: always
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: release
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: install stable rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+
+      - name: cache cargo artifacts
+        uses: Swatinem/rust-cache@v2
+
+      - name: verify tag matches crate version
+        shell: bash
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          version="$(cargo metadata --format-version 1 --no-deps | python3 -c 'import json,sys; print(json.load(sys.stdin)["packages"][0]["version"])')"
+          if [[ "$tag" != "$version" ]]; then
+            echo "tag version $tag does not match crate version $version" >&2
+            exit 1
+          fi
+
+      - name: cargo clippy
+        run: cargo clippy --all-targets --all-features --locked -- -D warnings
+
+      - name: cargo test
+        run: cargo test --all-features --locked
+
+      - name: cargo package
+        run: cargo package --locked
+
+      - name: create crate checksum
+        id: crate
+        shell: bash
+        run: |
+          version="$(cargo metadata --format-version 1 --no-deps | python3 -c 'import json,sys; print(json.load(sys.stdin)["packages"][0]["version"])')"
+          crate_file="target/package/lzvn-${version}.crate"
+          checksum_file="target/package/lzvn-${version}.crate.sha256"
+          sha256sum "$crate_file" > "$checksum_file"
+          echo "crate_file=$crate_file" >> "$GITHUB_OUTPUT"
+          echo "checksum_file=$checksum_file" >> "$GITHUB_OUTPUT"
+
+      - name: upload crate artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-artifacts
+          path: |
+            ${{ steps.crate.outputs.crate_file }}
+            ${{ steps.crate.outputs.checksum_file }}
+
+      - name: create github release
+        if: ${{ env.ACT != 'true' }}
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: |
+            ${{ steps.crate.outputs.crate_file }}
+            ${{ steps.crate.outputs.checksum_file }}

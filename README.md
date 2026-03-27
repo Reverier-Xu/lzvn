@@ -29,6 +29,11 @@ Validation:
 - `cargo clippy --all-targets --all-features -- -D warnings`
 - `cargo bench`
 
+Release:
+
+- push a tag like `0.1.0` to trigger the release workflow
+- the workflow verifies the tag matches `Cargo.toml`, runs clippy and tests, packages the crate, and creates a GitHub release with the `.crate` file and sha256 checksum
+
 Fuzzing:
 
 - install `cargo-fuzz` with `cargo install cargo-fuzz`
