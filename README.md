@@ -1,5 +1,8 @@
 # lzvn
 
+[![crates.io](https://img.shields.io/crates/v/lzvn.svg)](https://crates.io/crates/lzvn)
+[![docs.rs](https://docs.rs/lzvn/badge.svg)](https://docs.rs/lzvn)
+
 `lzvn` is a safe, clean-room Rust implementation of Apple's LZVN format.
 
 Current scope:
@@ -39,6 +42,10 @@ Fixtures:
 - real-world regression fixtures live in `tests/fixtures/`
 - source urls and license notes are documented in `tests/fixtures/README.md`
 - fuzz seed corpora live in `fuzz/corpus/`
+
+Install:
+
+- `cargo add lzvn`
 
 Example:
 
