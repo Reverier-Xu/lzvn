@@ -19,6 +19,12 @@ Planned next steps:
 - higher-level APFS / HFS+ integration helpers
 - fuzzing, benchmarks, and differential tests against Apple-compatible output
 
+Validation:
+
+- `cargo test`
+- `cargo clippy --all-targets --all-features -- -D warnings`
+- `cargo bench`
+
 Example:
 
 ```rust

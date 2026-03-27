@@ -11,6 +11,14 @@ categories = ["compression"]
 [dependencies]
 thiserror = "2.0.17"
 
+[dev-dependencies]
+criterion = "0.5.1"
+proptest = "1.9.0"
+
 [lints.rust]
 unsafe_code = "forbid"
 missing_docs = "warn"
+
+[[bench]]
+name = "codec"
+harness = false
