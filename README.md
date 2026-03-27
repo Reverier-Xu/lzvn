@@ -56,3 +56,9 @@ let decoded = lzvn::decode_raw(&encoded, 5)?;
 assert_eq!(decoded, b"hello");
 # Ok::<(), lzvn::Error>(())
 ```
+
+## Credits
+
+- [xerub/LZVN](https://github.com/xerub/LZVN)
+- [lzfse/lzfse](https://github.com/lzfse/lzfse)
+- [dimkr/pylzfse](https://github.com/dimkr/pylzfse)
