@@ -25,6 +25,11 @@ Validation:
 - `cargo clippy --all-targets --all-features -- -D warnings`
 - `cargo bench`
 
+Fixtures:
+
+- real-world regression fixtures live in `tests/fixtures/`
+- source urls and license notes are documented in `tests/fixtures/README.md`
+
 Example:
 
 ```rust
