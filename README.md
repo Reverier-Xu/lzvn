@@ -31,7 +31,7 @@ Validation:
 
 Release:
 
-- push a tag like `0.1.0` to trigger the release workflow
+- push a tag matching the crate version, for example `0.1.1`, to trigger the release workflow
 - the workflow verifies the tag matches `Cargo.toml`, runs clippy and tests, packages the crate, and creates a GitHub release with the `.crate` file and sha256 checksum
 
 Fuzzing:
