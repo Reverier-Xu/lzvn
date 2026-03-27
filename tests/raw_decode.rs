@@ -7,7 +7,7 @@ const EOS: [u8; 8] = [0x06, 0, 0, 0, 0, 0, 0, 0];
 #[test]
 fn decodes_small_literal() {
   let encoded = [
-    0xe5, b'h', b'e', b'l', b'l', b'o', 0x06, 0, 0, 0, 0, 0, 0, 0,
+    0xE5, b'h', b'e', b'l', b'l', b'o', 0x06, 0, 0, 0, 0, 0, 0, 0,
   ];
 
   let decoded = decode_raw(&encoded, 5).expect("small literal should decode");
@@ -16,7 +16,7 @@ fn decodes_small_literal() {
 
 #[test]
 fn decodes_small_literal_with_compact_eos() {
-  let encoded = [0xe5, b'h', b'e', b'l', b'l', b'o', 0x06];
+  let encoded = [0xE5, b'h', b'e', b'l', b'l', b'o', 0x06];
 
   let decoded = decode_raw(&encoded, 5).expect("compact eos should decode");
   assert_eq!(decoded, b"hello");
@@ -25,7 +25,7 @@ fn decodes_small_literal_with_compact_eos() {
 #[test]
 fn decodes_large_literal() {
   let literal = b"abcdefghijklmnopqrst";
-  let mut encoded = vec![0xe0, (literal.len() - 16) as u8];
+  let mut encoded = vec![0xE0, (literal.len() - 16) as u8];
   encoded.extend_from_slice(literal);
   encoded.extend_from_slice(&EOS);
 
@@ -35,7 +35,7 @@ fn decodes_large_literal() {
 
 #[test]
 fn decodes_small_distance_match() {
-  let encoded = [0xc0, 0x03, b'a', b'b', b'c', 0x06, 0, 0, 0, 0, 0, 0, 0];
+  let encoded = [0xC0, 0x03, b'a', b'b', b'c', 0x06, 0, 0, 0, 0, 0, 0, 0];
 
   let decoded = decode_raw(&encoded, 6).expect("small-distance match should decode");
   assert_eq!(decoded, b"abcabc");
@@ -44,7 +44,7 @@ fn decodes_small_distance_match() {
 #[test]
 fn decodes_previous_distance_and_small_match() {
   let encoded = [
-    0x40, 0x01, b'a', 0x46, b'b', 0xf4, 0x06, 0, 0, 0, 0, 0, 0, 0,
+    0x40, 0x01, b'a', 0x46, b'b', 0xF4, 0x06, 0, 0, 0, 0, 0, 0, 0,
   ];
 
   let decoded = decode_raw(&encoded, 12).expect("previous-distance path should decode");
@@ -61,7 +61,7 @@ fn decodes_large_distance_opcode() {
 
 #[test]
 fn decodes_large_match() {
-  let encoded = [0x40, 0x01, b'a', 0xf0, 0x04, 0x06, 0, 0, 0, 0, 0, 0, 0];
+  let encoded = [0x40, 0x01, b'a', 0xF0, 0x04, 0x06, 0, 0, 0, 0, 0, 0, 0];
 
   let decoded = decode_raw(&encoded, 24).expect("large match should decode");
   assert_eq!(decoded, vec![b'a'; 24]);
@@ -71,7 +71,7 @@ fn decodes_large_match() {
 fn decodes_medium_distance_match() {
   let literal = vec![b'x'; 1_536];
   let mut encoded = literal_only_stream(&literal);
-  encoded.extend_from_slice(&[0xa0, 0x00, 0x18]);
+  encoded.extend_from_slice(&[0xA0, 0x00, 0x18]);
   encoded.extend_from_slice(&EOS);
 
   let decoded = decode_raw(&encoded, 1_539).expect("medium-distance opcode should decode");
@@ -89,7 +89,7 @@ fn decodes_overlap_match() {
 
 #[test]
 fn rejects_invalid_opcode() {
-  let mut encoded = vec![0x1e];
+  let mut encoded = vec![0x1E];
   encoded.extend_from_slice(&EOS);
 
   let err = decode_raw(&encoded, 0).expect_err("invalid opcode should fail");
@@ -97,7 +97,7 @@ fn rejects_invalid_opcode() {
     err,
     Error::InvalidOpcode {
       position: 0,
-      opcode: 0x1e,
+      opcode: 0x1E,
     }
   );
 }
@@ -118,7 +118,7 @@ fn rejects_invalid_match_distance() {
 
 #[test]
 fn rejects_truncated_input() {
-  let encoded = [0xe1, b'a'];
+  let encoded = [0xE1, b'a'];
 
   let err = decode_raw(&encoded, 1).expect_err("missing end marker should fail");
   assert_eq!(err, Error::TruncatedInput { position: 2 });
@@ -126,7 +126,7 @@ fn rejects_truncated_input() {
 
 #[test]
 fn rejects_trailing_bytes() {
-  let mut encoded = vec![0xe1, b'a'];
+  let mut encoded = vec![0xE1, b'a'];
   encoded.extend_from_slice(&EOS);
   encoded.push(0x00);
 
@@ -137,7 +137,7 @@ fn rejects_trailing_bytes() {
 #[test]
 fn decode_into_reports_output_too_small() {
   let encoded = [
-    0xe5, b'h', b'e', b'l', b'l', b'o', 0x06, 0, 0, 0, 0, 0, 0, 0,
+    0xE5, b'h', b'e', b'l', b'l', b'o', 0x06, 0, 0, 0, 0, 0, 0, 0,
   ];
   let mut decoded = [0_u8; 4];
 
@@ -154,7 +154,7 @@ fn decode_into_reports_output_too_small() {
 #[test]
 fn reports_size_mismatch_for_larger_than_actual_output() {
   let encoded = [
-    0xe5, b'h', b'e', b'l', b'l', b'o', 0x06, 0, 0, 0, 0, 0, 0, 0,
+    0xE5, b'h', b'e', b'l', b'l', b'o', 0x06, 0, 0, 0, 0, 0, 0, 0,
   ];
 
   let err = decode_raw(&encoded, 6).expect_err("length mismatch should fail");
@@ -175,12 +175,12 @@ fn literal_only_stream(bytes: &[u8]) -> Vec<u8> {
     let remaining = bytes.len() - offset;
     if remaining > 15 {
       let chunk_len = remaining.min(271);
-      encoded.push(0xe0);
+      encoded.push(0xE0);
       encoded.push((chunk_len - 16) as u8);
       encoded.extend_from_slice(&bytes[offset..offset + chunk_len]);
       offset += chunk_len;
     } else {
-      encoded.push(0xe0 + remaining as u8);
+      encoded.push(0xE0 + remaining as u8);
       encoded.extend_from_slice(&bytes[offset..]);
       offset = bytes.len();
     }

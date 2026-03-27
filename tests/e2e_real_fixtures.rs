@@ -1,4 +1,5 @@
-//! End-to-end tests against real-world fixture data vendored in `tests/fixtures`.
+//! End-to-end tests against real-world fixture data vendored in
+//! `tests/fixtures`.
 
 use lzvn::{DecmpfsCompressionType, decode_decmpfs, decode_raw, parse_decmpfs_header};
 

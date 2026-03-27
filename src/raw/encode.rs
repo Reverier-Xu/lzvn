@@ -3,11 +3,11 @@ const EOS: [u8; 8] = [0x06, 0, 0, 0, 0, 0, 0, 0];
 const HASH_BITS: usize = 14;
 const HASH_SIZE: usize = 1 << HASH_BITS;
 const INVALID_POSITION: usize = usize::MAX;
-const MAX_DISTANCE: usize = 0xffff;
+const MAX_DISTANCE: usize = 0xFFFF;
 const MAX_INLINE_LITERAL: usize = 3;
 const MAX_LITERAL_LEN: usize = 271;
 const MAX_MATCH_LEN: usize = 271;
-const MAX_MEDIUM_DISTANCE: usize = 0x3fff;
+const MAX_MEDIUM_DISTANCE: usize = 0x3FFF;
 const MAX_MEDIUM_MATCH: usize = 34;
 const MAX_SHORT_DISTANCE: usize = 0x600;
 const MIN_MATCH_LEN: usize = 3;
@@ -258,9 +258,9 @@ impl<'a> Encoder<'a> {
       };
 
       if chunk_len <= 15 {
-        self.output.push(0xe0 | chunk_len as u8);
+        self.output.push(0xE0 | chunk_len as u8);
       } else {
-        self.output.push(0xe0);
+        self.output.push(0xE0);
         self.output.push((chunk_len - 16) as u8);
       }
 
@@ -286,7 +286,7 @@ impl<'a> Encoder<'a> {
     debug_assert!((MIN_MATCH_LEN..=MAX_MEDIUM_MATCH).contains(&match_len));
 
     let match_code = (match_len - MIN_MATCH_LEN) as u8;
-    let opcode = 0xa0 | ((literals.len() as u8) << 3) | (match_code >> 2);
+    let opcode = 0xA0 | ((literals.len() as u8) << 3) | (match_code >> 2);
     let packed = ((distance as u16) << 2) | (match_code as u16 & 0x03);
 
     self.output.push(opcode);
@@ -323,9 +323,9 @@ impl<'a> Encoder<'a> {
       };
 
       if chunk_len <= 15 {
-        self.output.push(0xf0 | chunk_len as u8);
+        self.output.push(0xF0 | chunk_len as u8);
       } else {
-        self.output.push(0xf0);
+        self.output.push(0xF0);
         self.output.push((chunk_len - 16) as u8);
       }
 
@@ -348,7 +348,7 @@ mod tests {
     encoder.previous_distance = 3;
     encoder.emit_match_with_literals(b"abc", 6, 3);
 
-    assert_eq!(encoder.output, [0xce, b'a', b'b', b'c', 0xf2]);
+    assert_eq!(encoder.output, [0xCE, b'a', b'b', b'c', 0xF2]);
   }
 
   #[test]
@@ -356,6 +356,6 @@ mod tests {
     let mut encoder = Encoder::new(b"");
     encoder.emit_match_with_literals(b"abc", 5, 20_000);
 
-    assert_eq!(encoder.output, [0xcf, 0x20, 0x4e, b'a', b'b', b'c', 0xf1]);
+    assert_eq!(encoder.output, [0xCF, 0x20, 0x4E, b'a', b'b', b'c', 0xF1]);
   }
 }

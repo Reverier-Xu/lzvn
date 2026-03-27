@@ -1,9 +1,8 @@
-use crate::{Error, Result, StreamProgress, StreamStatus};
-
 use super::{
   encode,
   opcode::{OpcodeKind, classify},
 };
+use crate::{Error, Result, StreamProgress, StreamStatus};
 
 const MAX_EOS_PADDING: usize = 7;
 const INPUT_COMPACT_THRESHOLD: usize = 4_096;
@@ -200,7 +199,7 @@ impl RawDecoder {
           self.prepare_literal_and_match(1, literal_len, match_len, self.previous_distance)?;
         }
         OpcodeKind::SmallLiteral => {
-          let literal_len = (opcode & 0x0f) as usize;
+          let literal_len = (opcode & 0x0F) as usize;
           if !self.ensure_buffered(1 + literal_len)? {
             return Ok(StreamProgress::new(written, StreamStatus::NeedInput));
           }
@@ -220,7 +219,7 @@ impl RawDecoder {
           self.prepare_literal_only(2, literal_len);
         }
         OpcodeKind::SmallMatch => {
-          self.prepare_match_only(1, (opcode & 0x0f) as usize, self.previous_distance)?;
+          self.prepare_match_only(1, (opcode & 0x0F) as usize, self.previous_distance)?;
         }
         OpcodeKind::LargeMatch => {
           if !self.ensure_buffered(2)? {

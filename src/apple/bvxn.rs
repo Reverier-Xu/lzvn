@@ -6,7 +6,7 @@ use crate::{
 const HEADER_LEN: usize = 12;
 
 /// Little-endian magic value for an Apple `bvxn` block.
-pub const BVXN_MAGIC: u32 = 0x6e78_7662;
+pub const BVXN_MAGIC: u32 = 0x6E78_7662;
 
 /// Parsed metadata from an Apple `bvxn` block header.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

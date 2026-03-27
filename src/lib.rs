@@ -175,11 +175,11 @@ pub fn decode_bvxn_into(src: &[u8], dst: &mut [u8]) -> Result<usize> {
   apple::bvxn::decode_into(src, dst)
 }
 
-pub use apple::bvxn::{
-  BVXN_MAGIC, BvxnDecoder, BvxnEncoder, BvxnHeader, parse_header as parse_bvxn_header,
-};
-pub use apple::fs::decmpfs::{
-  DECMPFS_CHUNK_SIZE, DECMPFS_HEADER_LEN, DECMPFS_MAGIC, DECMPFS_MAX_XATTR_DATA_SIZE,
-  DECMPFS_MAX_XATTR_SIZE, DecmpfsCompressionType, DecmpfsHeader, EncodedDecmpfs,
-  parse_header as parse_decmpfs_header,
+pub use apple::{
+  bvxn::{BVXN_MAGIC, BvxnDecoder, BvxnEncoder, BvxnHeader, parse_header as parse_bvxn_header},
+  fs::decmpfs::{
+    DECMPFS_CHUNK_SIZE, DECMPFS_HEADER_LEN, DECMPFS_MAGIC, DECMPFS_MAX_XATTR_DATA_SIZE,
+    DECMPFS_MAX_XATTR_SIZE, DecmpfsCompressionType, DecmpfsHeader, EncodedDecmpfs,
+    parse_header as parse_decmpfs_header,
+  },
 };

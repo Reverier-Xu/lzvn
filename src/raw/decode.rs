@@ -1,6 +1,5 @@
-use crate::{Error, Result};
-
 use super::opcode::{OpcodeKind, classify};
+use crate::{Error, Result};
 
 const MAX_EOS_PADDING: usize = 7;
 
@@ -115,7 +114,7 @@ impl Decoder<'_> {
           self.copy_literal_and_match(1, literal_len, match_len, self.previous_distance)?;
         }
         OpcodeKind::SmallLiteral => {
-          let literal_len = (opcode & 0x0f) as usize;
+          let literal_len = (opcode & 0x0F) as usize;
           self.copy_literal_only(1, literal_len)?;
         }
         OpcodeKind::LargeLiteral => {
@@ -124,7 +123,7 @@ impl Decoder<'_> {
           self.copy_literal_only(2, literal_len)?;
         }
         OpcodeKind::SmallMatch => {
-          let match_len = (opcode & 0x0f) as usize;
+          let match_len = (opcode & 0x0F) as usize;
           self.copy_match_only(1, match_len, self.previous_distance)?;
         }
         OpcodeKind::LargeMatch => {

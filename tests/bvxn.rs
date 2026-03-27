@@ -70,11 +70,11 @@ fn rejects_size_mismatch_between_header_and_payload() {
 
 #[test]
 fn exposes_public_magic_constant() {
-  assert_eq!(BVXN_MAGIC, 0x6e78_7662);
+  assert_eq!(BVXN_MAGIC, 0x6E78_7662);
 }
 
 fn raw_hello_payload() -> Vec<u8> {
-  let mut payload = vec![0xe5, b'h', b'e', b'l', b'l', b'o'];
+  let mut payload = vec![0xE5, b'h', b'e', b'l', b'l', b'o'];
   payload.extend_from_slice(&EOS);
   payload
 }

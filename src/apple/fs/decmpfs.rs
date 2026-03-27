@@ -1,7 +1,7 @@
 use crate::{Error, Result, raw};
 
 /// Little-endian magic value for a `decmpfs` xattr header.
-pub const DECMPFS_MAGIC: u32 = 0x636d_7066;
+pub const DECMPFS_MAGIC: u32 = 0x636D_7066;
 /// The size of the fixed `decmpfs` xattr header.
 pub const DECMPFS_HEADER_LEN: usize = 16;
 /// The maximum size of a `decmpfs` xattr.

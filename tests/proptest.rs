@@ -4,8 +4,7 @@ use lzvn::{
   BvxnDecoder, BvxnEncoder, RawDecoder, RawEncoder, StreamStatus, decode_bvxn, decode_decmpfs,
   decode_raw, encode_bvxn, encode_decmpfs, encode_raw,
 };
-use proptest::collection::vec;
-use proptest::prelude::*;
+use proptest::{collection::vec, prelude::*};
 
 fn byte_data(max_len: usize) -> impl Strategy<Value = Vec<u8>> {
   vec(any::<u8>(), 0..max_len)

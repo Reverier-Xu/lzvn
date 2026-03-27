@@ -16,7 +16,7 @@ fn encodes_small_literal_stream_exactly() {
   assert_eq!(
     encoded,
     [
-      0xe5, b'h', b'e', b'l', b'l', b'o', 0x06, 0, 0, 0, 0, 0, 0, 0
+      0xE5, b'h', b'e', b'l', b'l', b'o', 0x06, 0, 0, 0, 0, 0, 0, 0
     ]
   );
 }
@@ -35,7 +35,7 @@ fn encodes_medium_distance_match_exactly() {
   assert_eq!(
     encoded,
     [
-      0xb8, 0x0f, 0x00, b'a', b'b', b'c', 0x06, 0, 0, 0, 0, 0, 0, 0
+      0xB8, 0x0F, 0x00, b'a', b'b', b'c', 0x06, 0, 0, 0, 0, 0, 0, 0
     ]
   );
 }
@@ -69,7 +69,7 @@ fn bvxn_encoder_produces_expected_small_block() {
   assert_eq!(
     block,
     [
-      b'b', b'v', b'x', b'n', 0x05, 0x00, 0x00, 0x00, 0x0e, 0x00, 0x00, 0x00, 0xe5, b'h', b'e',
+      b'b', b'v', b'x', b'n', 0x05, 0x00, 0x00, 0x00, 0x0E, 0x00, 0x00, 0x00, 0xE5, b'h', b'e',
       b'l', b'l', b'o', 0x06, 0, 0, 0, 0, 0, 0, 0,
     ]
   );
