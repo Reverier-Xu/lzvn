@@ -60,6 +60,7 @@ jobs:
           echo "checksum_file=$checksum_file" >> "$GITHUB_OUTPUT"
 
       - name: upload crate artifacts
+        if: ${{ env.ACT != 'true' }}
         uses: actions/upload-artifact@v4
         with:
           name: release-artifacts
